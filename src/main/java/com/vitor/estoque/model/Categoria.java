@@ -7,8 +7,9 @@ public enum Categoria {
     TIJOLO,
     BLOCO,
     ARGAMASSA,
-    ACO,TINTA,
+    ACO,
+    TINTA,
     FERRAMENTAS,
     OUTROS,
-    
+
 }
