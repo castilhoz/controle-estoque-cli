@@ -44,19 +44,30 @@ public class ProdutoService {
         return repository.removerPorId(id);
     }
 
-    public boolean atualizarNomePorId(int id, String NovoNome) {
+    public void atualizarNomePorId(int id, String novoNome) {
 
-        Produto produto = repository.buscarPorId(id);
-
-        if (NovoNome == null || NovoNome.isBlank()) {
+        if (novoNome == null || novoNome.isBlank()) {
             throw new IllegalArgumentException("Novo nome não pode ser nulo ou vazio.");
         }
 
-        
+        Produto produto = buscarPorId(id);
 
+        String novoNomeTratado = novoNome.trim();
 
+        if (repository.existePorNome(novoNomeTratado)) {
+            throw new IllegalArgumentException("Nome em conflito com outro produto.");
+        }
 
+        Produto produtoAtualizado = new Produto(
+                produto.getId(),
+                novoNomeTratado,
+                produto.getDescricao(),
+                produto.getCategoria(),
+                produto.getPreco(),
+                produto.getQuantidade(),
+                produto.getEstoqueMinimo());
 
+        repository.atualizar(produtoAtualizado);
 
     }
 }
